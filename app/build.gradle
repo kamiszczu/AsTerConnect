@@ -210,6 +210,7 @@ clean {
     }
 }
 
+/* AsTerConnect: Unused
 task downloadBootstraps() {
     doLast {
         def packageVariant = project.ext.packageVariant
@@ -236,3 +237,4 @@ afterEvaluate {
         variant.javaCompileProvider.get().dependsOn(downloadBootstraps)
     }
 }
+*/
