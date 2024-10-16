@@ -1,6 +1,7 @@
 package com.termux.shared.termux.settings.properties;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -56,9 +57,6 @@ public abstract class TermuxSharedProperties {
     }
 
 
-
-
-
     /**
      * Get the {@link Properties} from the {@link #mPropertiesFile} file.
      *
@@ -75,8 +73,8 @@ public abstract class TermuxSharedProperties {
     /**
      * Get the {@link String} value for the key passed from the {@link #mPropertiesFile} file.
      *
-     * @param key The key to read.
-     * @param def The default value.
+     * @param key    The key to read.
+     * @param def    The default value.
      * @param cached If {@code true}, then the value is returned from the the {@link Properties} in-memory cache.
      *               Otherwise the {@link Properties} object is read directly from the file
      *               and value is returned from it against the key.
@@ -90,10 +88,10 @@ public abstract class TermuxSharedProperties {
      * A function to check if the value is {@code true} for {@link Properties} key read from
      * the {@link #mPropertiesFile} file.
      *
-     * @param key The key to read.
-     * @param cached If {@code true}, then the value is checked from the the {@link Properties} in-memory cache.
-     *               Otherwise the {@link Properties} object is read directly from the file
-     *               and value is checked from it.
+     * @param key                    The key to read.
+     * @param cached                 If {@code true}, then the value is checked from the the {@link Properties} in-memory cache.
+     *                               Otherwise the {@link Properties} object is read directly from the file
+     *                               and value is checked from it.
      * @param logErrorOnInvalidValue If {@code true}, then an error will be logged if key value
      *                               was found in {@link Properties} but was invalid.
      * @return Returns the {@code true} if the {@link Properties} key {@link String} value equals "true",
@@ -108,10 +106,10 @@ public abstract class TermuxSharedProperties {
      * A function to check if the value is {@code false} for {@link Properties} key read from
      * the {@link #mPropertiesFile} file.
      *
-     * @param key The key to read.
-     * @param cached If {@code true}, then the value is checked from the the {@link Properties} in-memory cache.
-     *               Otherwise the {@link Properties} object is read directly from the file
-     *               and value is checked from it.
+     * @param key                    The key to read.
+     * @param cached                 If {@code true}, then the value is checked from the the {@link Properties} in-memory cache.
+     *                               Otherwise the {@link Properties} object is read directly from the file
+     *                               and value is checked from it.
      * @param logErrorOnInvalidValue If {@code true}, then an error will be logged if key value
      *                               was found in {@link Properties} but was invalid.
      * @return Returns {@code true} if the {@link Properties} key {@link String} value equals "false",
@@ -121,9 +119,6 @@ public abstract class TermuxSharedProperties {
     public boolean isPropertyValueFalse(String key, boolean cached, boolean logErrorOnInvalidValue) {
         return (boolean) SharedProperties.getInvertedBooleanValueForStringValue(key, (String) getPropertyValue(key, null, cached), true, logErrorOnInvalidValue, LOG_TAG);
     }
-
-
-
 
 
     /**
@@ -142,7 +137,7 @@ public abstract class TermuxSharedProperties {
      * If cache is {@code true}, then value is returned from the {@link HashMap <>} in-memory cache,
      * so a call to {@link #loadTermuxPropertiesFromDisk()} must be made before this.
      *
-     * @param key The key to read from the {@link HashMap<>} in-memory cache.
+     * @param key    The key to read from the {@link HashMap<>} in-memory cache.
      * @param cached If {@code true}, then the value is returned from the the {@link HashMap <>} in-memory cache,
      *               but if the value is null, then an attempt is made to return the default value.
      *               If {@code false}, then the {@link Properties} object is read directly from the file
@@ -165,7 +160,7 @@ public abstract class TermuxSharedProperties {
                 // A null value can still be returned by
                 // {@link #getInternalPropertyValueFromValue(Context,String,String)} for some keys
                 value = getInternalTermuxPropertyValueFromValue(mContext, key, null);
-                Logger.logWarn(LOG_TAG, "The value for \"" + key + "\" not found in SharedProperties cache, force returning default value: `" + value +  "`");
+                Logger.logWarn(LOG_TAG, "The value for \"" + key + "\" not found in SharedProperties cache, force returning default value: `" + value + "`");
                 return value;
             }
         } else {
@@ -175,16 +170,13 @@ public abstract class TermuxSharedProperties {
     }
 
 
-
-
-
     /**
      * Get the internal {@link Object} value for the key passed from the first file found in
      * {@link TermuxConstants#TERMUX_PROPERTIES_FILE_PATHS_LIST}. The {@link Properties} object is
      * read directly from the file and internal value is returned for the property value against the key.
      *
      * @param context The context for operations.
-     * @param key The key for which the internal object is required.
+     * @param key     The key for which the internal object is required.
      * @return Returns the {@link Object} object. This will be {@code null} if key is not found or
      * the object stored against the key is {@code null}.
      */
@@ -206,7 +198,7 @@ public abstract class TermuxSharedProperties {
 
         /**
          * Override the
-         * {@link SharedPropertiesParser#getInternalPropertyValueFromValue(Context,String,String)}
+         * {@link SharedPropertiesParser#getInternalPropertyValueFromValue(Context, String, String)}
          * interface function.
          */
         @Override
@@ -238,14 +230,13 @@ public abstract class TermuxSharedProperties {
     }
 
 
-
     /**
      * A static function that should return the internal termux {@link Object} for a key/value pair
      * read from properties file.
      *
      * @param context The context for operations.
-     * @param key The key for which the internal object is required.
-     * @param value The literal value for the property found is the properties file.
+     * @param key     The key for which the internal object is required.
+     * @param value   The literal value for the property found is the properties file.
      * @return Returns the internal termux {@link Object} object.
      */
     public static Object getInternalTermuxPropertyValueFromValue(Context context, String key, String value) {
@@ -308,20 +299,17 @@ public abstract class TermuxSharedProperties {
                 // default true boolean behaviour
                 if (TermuxPropertyConstants.TERMUX_DEFAULT_TRUE_BOOLEAN_BEHAVIOUR_PROPERTIES_LIST.contains(key))
                     return (boolean) SharedProperties.getBooleanValueForStringValue(key, value, true, true, LOG_TAG);
-                // default inverted false boolean behaviour
-                //else if (TermuxPropertyConstants.TERMUX_DEFAULT_INVERETED_FALSE_BOOLEAN_BEHAVIOUR_PROPERTIES_LIST.contains(key))
-                //    return (boolean) SharedProperties.getInvertedBooleanValueForStringValue(key, value, false, true, LOG_TAG);
-                // default inverted true boolean behaviour
-                // else if (TermuxPropertyConstants.TERMUX_DEFAULT_INVERETED_TRUE_BOOLEAN_BEHAVIOUR_PROPERTIES_LIST.contains(key))
-                //    return (boolean) SharedProperties.getInvertedBooleanValueForStringValue(key, value, true, true, LOG_TAG);
-                // just use String object as is (may be null)
+                    // default inverted false boolean behaviour
+                    //else if (TermuxPropertyConstants.TERMUX_DEFAULT_INVERETED_FALSE_BOOLEAN_BEHAVIOUR_PROPERTIES_LIST.contains(key))
+                    //    return (boolean) SharedProperties.getInvertedBooleanValueForStringValue(key, value, false, true, LOG_TAG);
+                    // default inverted true boolean behaviour
+                    // else if (TermuxPropertyConstants.TERMUX_DEFAULT_INVERETED_TRUE_BOOLEAN_BEHAVIOUR_PROPERTIES_LIST.contains(key))
+                    //    return (boolean) SharedProperties.getInvertedBooleanValueForStringValue(key, value, true, true, LOG_TAG);
+                    // just use String object as is (may be null)
                 else
                     return value;
         }
     }
-
-
-
 
 
     /**
@@ -460,7 +448,7 @@ public abstract class TermuxSharedProperties {
      * Returns the code point for the value if key is not {@code null} and value is not {@code null} and is valid,
      * otherwise returns {@code null}.
      *
-     * @param key The key for session shortcut.
+     * @param key   The key for session shortcut.
      * @param value The {@link String} value to convert.
      * @return Returns the internal value for value.
      */
@@ -500,13 +488,14 @@ public abstract class TermuxSharedProperties {
 
     /**
      * Returns the path itself if a directory exists at it and is readable, otherwise returns
-     *  {@link TermuxPropertyConstants#DEFAULT_IVALUE_DEFAULT_WORKING_DIRECTORY}.
+     * {@link TermuxPropertyConstants#DEFAULT_IVALUE_DEFAULT_WORKING_DIRECTORY}.
      *
      * @param path The {@link String} path to check.
      * @return Returns the internal value for value.
      */
     public static String getDefaultWorkingDirectoryInternalPropertyValueFromValue(String path) {
-        if (path == null || path.isEmpty()) return TermuxPropertyConstants.DEFAULT_IVALUE_DEFAULT_WORKING_DIRECTORY;
+        if (path == null || path.isEmpty())
+            return TermuxPropertyConstants.DEFAULT_IVALUE_DEFAULT_WORKING_DIRECTORY;
         File workDir = new File(path);
         if (!workDir.exists() || !workDir.isDirectory() || !workDir.canRead()) {
             // Fallback to default directory if user configured working directory does not exist,
@@ -571,9 +560,6 @@ public abstract class TermuxSharedProperties {
     }
 
 
-
-
-
     public boolean shouldAllowExternalApps() {
         return (boolean) getInternalPropertyValue(TermuxConstants.PROP_ALLOW_EXTERNAL_APPS, true);
     }
@@ -621,6 +607,21 @@ public abstract class TermuxSharedProperties {
     public boolean isUsingFullScreen() {
         return (boolean) getInternalPropertyValue(TermuxPropertyConstants.KEY_USE_FULLSCREEN, true);
     }
+
+    public int getCustomFontSize() {
+        String fontSizeStr = (String) getInternalPropertyValue(TermuxPropertyConstants.KEY_USE_FONT_SIZE, true);
+
+        int fontSize = 24;  // default value if problem parser value
+
+        try {
+            fontSize = Integer.parseInt(fontSizeStr);
+        } catch (NumberFormatException e) {
+            Log.e("TermuxProperties", "Invalid number format for font size: " + fontSizeStr);
+        }
+
+        return fontSize;
+    }
+
 
     public boolean isUsingFullScreenWorkAround() {
         return (boolean) getInternalPropertyValue(TermuxPropertyConstants.KEY_USE_FULLSCREEN_WORKAROUND, true);
@@ -670,7 +671,9 @@ public abstract class TermuxSharedProperties {
         return (String) getInternalPropertyValue(TermuxPropertyConstants.KEY_NIGHT_MODE, true);
     }
 
-    /** Get the {@link TermuxPropertyConstants#KEY_NIGHT_MODE} value from the properties file on disk. */
+    /**
+     * Get the {@link TermuxPropertyConstants#KEY_NIGHT_MODE} value from the properties file on disk.
+     */
     public static String getNightMode(Context context) {
         return (String) TermuxSharedProperties.getTermuxInternalPropertyValue(context,
             TermuxPropertyConstants.KEY_NIGHT_MODE);
@@ -683,9 +686,6 @@ public abstract class TermuxSharedProperties {
     public boolean areVirtualVolumeKeysDisabled() {
         return (boolean) TermuxPropertyConstants.IVALUE_VOLUME_KEY_BEHAVIOUR_VOLUME.equals(getInternalPropertyValue(TermuxPropertyConstants.KEY_VOLUME_KEYS_BEHAVIOUR, true));
     }
-
-
-
 
 
     public void dumpPropertiesToLog() {
