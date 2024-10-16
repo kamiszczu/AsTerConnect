@@ -56,10 +56,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 public class TermuxTerminalViewClient extends TermuxTerminalViewClientBase {
 
-    /* moje */
-    private TermuxAppSharedProperties mProperties;
-    /* moje */
-
     final TermuxActivity mActivity;
 
     final TermuxTerminalSessionActivityClient mTermuxTerminalSessionActivityClient;
