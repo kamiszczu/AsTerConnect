@@ -509,8 +509,6 @@ public final class TermuxPropertyConstants {
         KEY_HIDE_SOFT_KEYBOARD_ON_STARTUP,
         KEY_TERMINAL_ONCLICK_URL_OPEN,
         KEY_USE_CTRL_SPACE_WORKAROUND,
-        KEY_USE_FULLSCREEN,
-        KEY_USE_FULLSCREEN_WORKAROUND,
         TermuxConstants.PROP_ALLOW_EXTERNAL_APPS
     ));
 
@@ -522,7 +520,9 @@ public final class TermuxPropertyConstants {
      */
     public static final Set<String> TERMUX_DEFAULT_TRUE_BOOLEAN_BEHAVIOUR_PROPERTIES_LIST = new HashSet<>(Arrays.asList(
         KEY_EXTRA_KEYS_TEXT_ALL_CAPS,
-        KEY_RUN_TERMUX_AM_SOCKET_SERVER
+        KEY_RUN_TERMUX_AM_SOCKET_SERVER,
+        KEY_USE_FULLSCREEN,
+        KEY_USE_FULLSCREEN_WORKAROUND
     ));
 
     /**
